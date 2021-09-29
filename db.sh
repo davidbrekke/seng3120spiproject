@@ -14,8 +14,10 @@ readonly MYSQL=`which mysql`
 readonly Q1="CREATE DATABASE IF NOT EXISTS $1;"
 readonly Q2="CREATE USER '$2'@'localhost' IDENTIFIED BY '$3';"
 readonly Q3="GRANT ALL ON *.* TO '$2'@'localhost' IDENTIFIED BY '$3';"
-readonly Q4="FLUSH PRIVILEGES;"
-readonly SQL="${Q1}${Q2}${Q3}${Q4}"
+readonly Q4="CREATE USER '$2'@'%' IDENTIFIED BY '$3';"
+readonly Q5="GRANT ALL ON *.* TO '$2'@'%' IDENTIFIED BY '$3';"
+readonly Q6="FLUSH PRIVILEGES;"
+readonly SQL="${Q1}${Q2}${Q3}${Q4}${Q5}${Q6}"
 
 # Do some parameter checking and bail if bad
 if [ $# -ne $EXPECTED_ARGS ]
