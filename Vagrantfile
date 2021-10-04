@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
     db.vm.network "private_network", ip: "192.168.56.11"
 
     # EDIT DATABASE INFO in args
-    # provision the db server to run shell script on start 
+    # provision the db server to run shell script on start ex. "my_db david 1234abcd"
     db.vm.provision :shell, :path => "./db.sh", :args => "db_name username password"
 
     db.vm.provision :file, :source => "./mysqld.cnf", :destination => "/tmp/mysqld.cnf"
