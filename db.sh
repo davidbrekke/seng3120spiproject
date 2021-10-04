@@ -31,3 +31,11 @@ $MYSQL -uroot -p -e "$SQL"
 
 # Let the user know the database was created
 green "Database $1 and user $2 created with a password you chose"
+
+git clone https://github.com/datacharmer/test_db.git
+
+cd test_db
+
+mysql < employees.sql
+
+systemctl restart mysql
