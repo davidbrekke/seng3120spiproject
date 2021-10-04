@@ -19,6 +19,11 @@ Vagrant.configure("2") do |config|
     # provision the web server to run shell script on start
     web.vm.provision :shell, :path => "./web.sh"
 
+    # add php file to temperary location, 'vagrant' user doesnt have access to /var by default
+    web.vm.provision :file, :source => "./phptest.php", :destination => "/tmp/phptest.php"
+    # move php file to actual desired location via inline sudo user
+    web.vm.provision :shell, :inline => "mv /tmp/phptest.php /var/www/html/phptest.php"
+
   end # END WEB
 
   # DB server
@@ -30,10 +35,12 @@ Vagrant.configure("2") do |config|
     # give private ip
     db.vm.network "private_network", ip: "192.168.56.11"
 
-    # provision the db server to run shell script on start
+    # EDIT DATABASE INFO in args
+    # provision the db server to run shell script on start 
     db.vm.provision :shell, :path => "./db.sh", :args => "db_name username password"
 
-    db.vm.provision :file, :source => "./mysqld.cnf", :destination => "/home/vagrant/etc/mysql/mysql.conf.d/mysqld.cnf"
+    db.vm.provision :file, :source => "./mysqld.cnf", :destination => "/tmp/mysqld.cnf"
+    db.vm.provision :shell, :inline => "mv /tmp/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf"
 
   end # END DB
 
