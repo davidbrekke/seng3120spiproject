@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
     db.vm.provision :shell, :path => "./db.sh", :args => "db_name username password"
 
     db.vm.provision :file, :source => "./mysqld.cnf", :destination => "/tmp/mysqld.cnf"
-    db.vm.provision :shell, :inline => "mv /tmp/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf"
+    db.vm.provision :shell, :inline => "mv /tmp/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf && systemctl restart mysql"
 
   end # END DB
 
